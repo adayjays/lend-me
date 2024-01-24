@@ -1,0 +1,7 @@
+{
+  "name": "LendMe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,68 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+*~
+*.sw[mnpcod]
+.tmp
+*.tmp
+*.tmp.*
+UserInterfaceState.xcuserstate
+$RECYCLE.BIN/
+
+*.log
+lendMe/log.txt
+
+
+/lendMe/.sourcemaps
+/lendMe/.versions
+/lendMe/coverage
+
+# Ionic
+/lendMe/.ionic
+/lendMe/www
+/lendMe/platforms
+/lendMe/plugins
+
+# Compiled output
+/lendMe/dist
+/lendMe/tmp
+/lendMe/out-tsc
+/lendMe/bazel-out
+
+# Node
+/lendMe/node_modules
+/lendMe/npm-debug.log
+/lendMe/yarn-error.log
+
+# IDEs and editors
+/lendMe/.idea/
+/lendMe/.project
+/lendMe/.classpath
+/lendMe/.c9/
+/lendMe/*.launch
+/lendMe/.settings/
+/lendMe/*.sublime-project
+/lendMe/*.sublime-workspace
+
+# Visual Studio Code
+/lendMe/.vscode/*
+/lendMe/!.vscode/settings.json
+/lendMe/!.vscode/tasks.json
+/lendMe/!.vscode/launch.json
+/lendMe/!.vscode/extensions.json
+/lendMe/.history/*
+
+
+# Miscellaneous
+/lendMe/.angular
+/lendMe/.angular/cache
+/lendMe.sass-cache/
+/lendMe/connect.lock
+/lendMe/coverage
+/lendMe/libpeerconnection.log
+/lendMetestem.log
+/lendMe/typings
+
+# System files
+/lendMe/.DS_Store
+/lendMe/Thumbs.db
