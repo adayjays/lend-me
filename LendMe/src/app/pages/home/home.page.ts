@@ -10,19 +10,18 @@ export class HomePage implements OnInit {
 
   constructor(private router: Router) {}
 
-
-
   ngOnInit() {
   }
 
   borrow() {
     console.log('Borrow button clicked');
-    // Add logic for borrowing
+    // Navigate to the "Borrow" page
+    this.router.navigate(['/borrow']);
   }
 
   lend() {
     console.log('Lend button clicked');
-    // Add logic for lending
+    // Navigate to the "Lend" page
+    this.router.navigate(['/lend']);
   }
-
 }

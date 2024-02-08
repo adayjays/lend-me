@@ -26,6 +26,42 @@ const routes: Routes = [
   {
     path: 'lend',
     loadChildren: () => import('./pages/lend/lend.module').then( m => m.LendPageModule)
+  },
+  {
+    path: 'lend-options',
+    loadChildren: () => import('./pages/lend-options/lend-options.module').then( m => m.LendOptionsPageModule)
+  },
+  {
+    path: 'borrow-options',
+    loadChildren: () => import('./pages/borrow-options/borrow-options.module').then( m => m.BorrowOptionsPageModule)
+  },
+  {
+    path: 'borrow-item',
+    loadChildren: () => import('./pages/borrow-item/borrow-item.module').then( m => m.BorrowItemPageModule)
+  },
+  {
+    path: 'lend-item',
+    loadChildren: () => import('./pages/lend-item/lend-item.module').then( m => m.LendItemPageModule)
+  },
+  {
+    path: 'chats',
+    loadChildren: () => import('./pages/chats/chats.module').then( m => m.ChatsPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
 @NgModule({
