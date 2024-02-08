@@ -20,4 +20,34 @@ This instructs all web crawlers not to index any page on our site.
 
 ```html
 <meta name="robots" content="noindex, nofollow">
+```
 
+## Integrating Django with Django REST Framework
+
+Certainly! Here's the README entry written in the first-person perspective:
+
+## Integrating Django with Django REST Framework
+
+To integrate REST capabilities with my Django project, I opted for the Django REST Framework (DRF). Here's a step-by-step guide to getting started:
+
+### Installation
+
+First, I installed DRF using pip. I also installed optional packages to add Markdown support for the browsable API and filtering support. Here are the commands I used:
+
+```bash
+pip install djangorestframework
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter  # Filtering support
+```
+
+### Configuration
+
+Next, I added `'rest_framework'` to the `INSTALLED_APPS` list in my Django settings file (`settings.py`):
+
+```python
+INSTALLED_APPS = [
+    'rest_framework',
+]
+```
+
+By doing this, I enabled the Django REST Framework in my project. I followed instructions in :https://www.django-rest-framework.org/#installation
