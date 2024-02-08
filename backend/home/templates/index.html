@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lend Me app</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="robots" content="noindex, nofollow">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size: 16px;}
+img {margin-bottom: -8px;}
+.mySlides {display: none;}
+</style>
+</head>
+<body class="w3-content w3-black" style="max-width:1500px;">
+
+<!-- Header with Slideshow -->
+<header class="w3-display-container w3-center">
+  <button class="w3-button w3-block w3-green w3-hide-large w3-hide-medium" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button>
+  <div class="mySlides w3-animate-opacity">
+    <img class="w3-image" src="{% static '/images/app.jpg' %}" alt="Image 1" style="min-width:500px" width="1500" height="1000">
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
+      <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <h1 class="w3-xlarge">Borrow or Lend any Item on our App</h1>
+        <hr class="w3-opacity">
+        <p>Super simple installment: free of charge</p>
+        <p><button class="w3-button w3-block w3-green w3-round" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button></p>
+      </div>
+    </div>
+  </div>
+  <div class="mySlides w3-animate-opacity">
+    <img class="w3-image" src="{% static '/images/app2.jpg' %}" alt="Image 2" style="min-width:500px" width="1500" height="1000">
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
+      <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <h1 class="w3-xlarge w3-text-red"><b>CLICK!</b> Fast and Easy</h1>
+        <hr class="w3-opacity">
+        <p>Choose from our many features</p>
+        <p><button class="w3-button w3-block w3-red w3-round" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button></p>
+      </div>
+    </div>
+  </div>
+  <div class="mySlides w3-animate-opacity">
+    <img class="w3-image" src="{% static '/images/app4.jpg' %}" alt="Image 3" style="min-width:500px" width="1500" height="1000">
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
+      <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <h1 class="w3-xlarge">Smart Design</h1>
+        <hr class="w3-opacity">
+        <p>Chat with instant messaging</p>
+        <p><button class="w3-button w3-block w3-indigo w3-round" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button></p>
+      </div>
+    </div>
+  </div>
+  <a class="w3-button w3-black w3-display-right w3-margin-right w3-round w3-hide-small w3-hover-light-grey" onclick="plusDivs(1)">Take Tour <i class="fa fa-angle-right"></i></a>
+  <a class="w3-button w3-block w3-black w3-hide-large w3-hide-medium" onclick="plusDivs(1)">Take Tour <i class="fa fa-angle-right"></i></a>
+</header>
+
+<!-- The App Section -->
+<div class="w3-padding-64 w3-white">
+  <div class="w3-row-padding">
+    <div class="w3-col l8 m6">
+      <h1 class="w3-jumbo"><b>The App</b></h1>
+      <h1 class="w3-xxxlarge w3-text-green"><b>Why buy it?</b></h1>
+      <p><span class="w3-xlarge">Get all Pro features.</span>Investing in the Pro version of LendMe brings a host of exclusive advantages tailored to elevate your borrowing and lending journey. With advanced security measures, Pro users can trust in the safety of their personal information and transactions, ensuring peace of mind throughout their interactions on the platform. Additionally, Pro members receive priority support, gaining access to dedicated assistance and personalized solutions for any inquiries or issues they may encounter. Beyond enhanced security and support, the Pro version offers increased visibility within the LendMe community, enabling users to reach a broader audience and maximize their lending opportunities. With exclusive features, an ad-free experience, and early access to updates, upgrading to the Pro version is a 
+        strategic investment for those looking to optimize their experience on LendMe while also supporting the ongoing development of the platform.</p>
+      <button class="w3-button w3-light-grey w3-padding-large w3-section w3-hide-small" onclick="document.getElementById('download').style.display='block'">
+        <i class="fa fa-download"></i> Download Application
+      </button>
+      <p>Available for <i class="fa fa-android w3-xlarge w3-text-green"></i> <i class="fa fa-apple w3-xlarge"></i> <i class="fa fa-windows w3-xlarge w3-text-blue"></i></p>
+    </div>
+    <div class="w3-col l4 m6">
+      <img src="{% static '/images/img_app.jpg' %}" class="w3-image w3-right w3-hide-small" width="335" height="471">
+      <div class="w3-center w3-hide-large w3-hide-medium">
+        <button class="w3-button w3-block w3-padding-large" onclick="document.getElementById('download').style.display='block'">
+          <i class="fa fa-download"></i> Download Application
+        </button>
+        <img src="{% static '/images/img_app.jpg' %}" class="w3-image w3-margin-top" width="335" height="471">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="download" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content" style="padding:32px">
+    <div class="w3-container w3-white">
+      <i onclick="document.getElementById('download').style.display='none'" class="fa fa-remove w3-xlarge w3-button w3-transparent w3-right w3-xlarge"></i>
+      <h2 class="w3-wide">DOWNLOAD</h2>
+      <p>Download the app in AppStore, Google Play or Microsoft Store.</p>
+      <i class="fa fa-android w3-large"></i> <i class="fa fa-apple w3-large"></i> <i class="fa fa-windows w3-large"></i>
+      <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
+      <button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('download').style.display='none'">Fake Download</button>
+    </div>
+  </div>
+</div>
+
+<!-- Clarity Section -->
+<div class="w3-padding-64 w3-light-grey">
+  <div class="w3-row-padding">
+    <div class="w3-col l4 m6">
+      <img class="w3-image w3-round-large w3-hide-small w3-grayscale" src="{% static '/images/app5.jpg' %}" alt="App" width="335" height="471">
+    </div>
+    <div class="w3-col l8 m6">
+      <h1 class="w3-jumbo"><b>Clarity</b></h1>
+      <h1 class="w3-xxxlarge w3-text-red"><b>User-Centric Design</b></h1>
+      <p><span class="w3-xlarge">A revolution in making.</span> LendMe prioritizes user experience, offering an intuitive interface and streamlined processes for borrowing and lending. Our user-centric design ensures that every interaction is smooth, efficient, and enjoyable.</p>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="w3-container w3-padding-64 w3-dark-grey w3-center">
+    <h1 class="w3-jumbo"><b>Features</b></h1>
+    <p>Explore the key features that make LendMe the ultimate borrowing and lending platform.</p>
+  
+    <div class="w3-row" style="margin-top:64px">
+      <div class="w3-col s3">
+        <i class="fa fa-user w3-text-sand w3-jumbo"></i>
+        <p>User Authentication</p>
+        <p>Securely log in to access previous chats and preference settings. Your data is protected with advanced encryption.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-database w3-text-green w3-jumbo"></i>
+        <p>Database Interaction</p>
+        <p>Interact seamlessly with our database infrastructure (e.g., Parse) for reliable storage and retrieval of user data.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-user-plus w3-text-blue w3-jumbo"></i>
+        <p>Easy Sign-Up Process</p>
+        <p>New users can quickly sign up and join our community of borrowers and lenders with just a few simple steps.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-magic w3-text-yellow w3-jumbo"></i>
+        <p>Interactive Animations</p>
+        <p>Experience smooth animations throughout the app, enhancing the visual appeal and user engagement.</p>
+      </div>
+    </div>
+  
+    <div class="w3-row" style="margin-top:64px">
+      <div class="w3-col s3">
+        <i class="fa fa-compass w3-text-orange w3-jumbo"></i>
+        <p>Bottom Navigation Bar</p>
+        <p>Easily navigate between Home/Feed, Roadmap, and User fragments using our intuitive bottom navigation bar.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-comment w3-text-purple w3-jumbo"></i>
+        <p>Instant Messaging</p>
+        <p>Communicate effortlessly with other users through our integrated instant messaging feature, facilitating smooth transaction discussions.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-calendar w3-text-teal w3-jumbo"></i>
+        <p>Scheduling</p>
+        <p>Effortlessly schedule borrowing and lending transactions, ensuring convenient coordination between users.</p>
+      </div>
+      <div class="w3-col s3">
+        <i class="fa fa-lock w3-text-red w3-jumbo"></i>
+        <p>Privacy Controls</p>
+        <p>Empower users with granular privacy controls, allowing them to manage their visibility and sharing preferences with ease.</p>
+      </div>
+    </div>
+  </div>
+<!-- Pricing Section -->
+<div class="w3-padding-64 w3-center w3-white">
+    <h1 class="w3-jumbo"><b>Pricing</b></h1>
+    <p class="w3-large">Choose a pricing plan that fits your needs.</p>
+    <div class="w3-row-padding" style="margin-top:64px">
+      <div class="w3-third w3-section">
+        <ul class="w3-ul w3-card w3-hover-shadow">
+          <li class="w3-dark-grey w3-xlarge w3-padding-32">Basic</li>
+          <li class="w3-padding-16"><b>Standard</b> Features</li>
+          <li class="w3-padding-16"><b>Access</b> to Community</li>
+          <li class="w3-padding-16"><b>Limited</b> Support</li>
+          <li class="w3-padding-16">
+            <h2 class="w3-opacity">$ 9.99/mo</h2>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('basicDownload').style.display='block'"><i class="fa fa-download"></i> Download</button>
+          </li>
+        </ul>
+      </div>
+      <div class="w3-third w3-section">
+        <ul class="w3-ul w3-card w3-hover-shadow">
+          <li class="w3-red w3-xlarge w3-padding-32">Premium</li>
+          <li class="w3-padding-16"><b>Advanced</b> Features</li>
+          <li class="w3-padding-16"><b>Priority</b> Access to Support</li>
+          <li class="w3-padding-16"><b>Exclusive</b> Community Access</li>
+          <li class="w3-padding-16">
+            <h2 class="w3-opacity">$ 19.99/mo</h2>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('premiumDownload').style.display='block'"><i class="fa fa-download"></i> Download</button>
+          </li>
+        </ul>
+      </div>
+      <div class="w3-third w3-section">
+        <ul class="w3-ul w3-card w3-hover-shadow">
+          <li class="w3-blue w3-xlarge w3-padding-32">Pro</li>
+          <li class="w3-padding-16"><b>All</b> Features Unlocked</li>
+          <li class="w3-padding-16"><b>Premium</b> Support</li>
+          <li class="w3-padding-16"><b>Unlimited</b> Community Access</li>
+          <li class="w3-padding-16">
+            <h2 class="w3-opacity">$ 29.99/mo</h2>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('proDownload').style.display='block'"><i class="fa fa-download"></i> Download</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <br>
+  </div>
+  
+  <!-- Modal for Basic Download -->
+  <div id="basicDownload" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <div class="w3-container w3-dark-grey">
+        <span onclick="document.getElementById('basicDownload').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+        <h1>Basic Download</h1>
+        <p>Download your Basic package.</p>
+        <p><button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('basicDownload').style.display='none'">Download</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for Premium Download -->
+  <div id="premiumDownload" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <div class="w3-container w3-red">
+        <span onclick="document.getElementById('premiumDownload').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+        <h1>Premium Download</h1>
+        <p>Download your Premium package.</p>
+        <p><button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('premiumDownload').style.display='none'">Download</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for Pro Download -->
+  <div id="proDownload" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <div class="w3-container w3-blue">
+        <span onclick="document.getElementById('proDownload').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+        <h1>Pro Download</h1>
+        <p>Download your Pro package.</p>
+        <p><button class="w3-button w3-black w3-padding-large" onclick="document.getElementById('proDownload').style.display='none'">Download</button></p>
+      </div>
+    </div>
+  </div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-light-grey w3-center w3-xlarge">
+  <div class="w3-section">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+// Slideshow
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+</script>
+
+</body>
+</html>
