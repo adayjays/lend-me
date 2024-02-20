@@ -3,14 +3,28 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center" >lend</ion-title>
+    <ion-title class="ion-text-center" >My Items on Lend</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">lend</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ng-container *ngIf="items && items.length > 0; else emptyList">
+    <ion-list inset lines="full">
+      <ion-item *ngFor="let item of items; let i = index" (click)="borrow(item.slug)">
+        {{ item.name }}
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ng-template #emptyList>
+    <div class="empty-message">
+      No items available 
+    </div>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/lend-item">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

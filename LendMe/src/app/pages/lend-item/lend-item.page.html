@@ -1,13 +1,58 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>lend-item</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" >{{ isNewItem ? 'Add Item' : 'Edit Item' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">lend-item</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input type="text" [(ngModel)]="item.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea rows="5" [(ngModel)]="item.description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Owner</ion-label>
+      <ion-input type="text" [(ngModel)]="item.owner"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Image</ion-label>
+      <ion-input type="text" [(ngModel)]="item.image"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Available</ion-label>
+      <ion-toggle [(ngModel)]="item.available"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Category</ion-label>
+      <ion-select [(ngModel)]="item.category">
+        <ion-select-option *ngFor="let category of itemCategories" [value]="category.id">
+          {{ category.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Loan Fee</ion-label>
+      <ion-input type="number" [(ngModel)]="item.loan_fee"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Penalty</ion-label>
+      <ion-input type="number" [(ngModel)]="item.penalty"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="saveItem()">Save</ion-button>
 </ion-content>

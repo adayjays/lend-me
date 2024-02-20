@@ -28,20 +28,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/lend/lend.module').then( m => m.LendPageModule)
   },
   {
-    path: 'lend-options',
-    loadChildren: () => import('./pages/lend-options/lend-options.module').then( m => m.LendOptionsPageModule)
-  },
-  {
     path: 'borrow-options',
     loadChildren: () => import('./pages/borrow-options/borrow-options.module').then( m => m.BorrowOptionsPageModule)
   },
   {
     path: 'borrow-item',
     loadChildren: () => import('./pages/borrow-item/borrow-item.module').then( m => m.BorrowItemPageModule)
-  },
-  {
-    path: 'lend-item',
-    loadChildren: () => import('./pages/lend-item/lend-item.module').then( m => m.LendItemPageModule)
   },
   {
     path: 'chats',
@@ -62,6 +54,10 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'lend-item',
+    loadChildren: () => import('./pages/lend-item/lend-item.module').then( m => m.LendItemPageModule)
   }
 ];
 @NgModule({

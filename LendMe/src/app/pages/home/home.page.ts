@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   borrow() {
     console.log('Borrow button clicked');
     // Navigate to the "Borrow" page
-    this.router.navigate(['/borrow']);
+    this.router.navigate(['/borrow-options']);
   }
 
   lend() {
