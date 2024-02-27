@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Item, ItemCategory, Blog, Chat
+from django.contrib.auth.models import User
 
 class ItemCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +45,8 @@ class UserProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'name', 'description', 'owner', 'available', 'category', 'loan_fee', 'penalty']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']

@@ -66,3 +66,118 @@ lendMe/log.txt
 # System files
 /lendMe/.DS_Store
 /lendMe/Thumbs.db
+
+/backend/__pycache__/
+/backend/*/__pycache__/
+# Django #
+/backend/*.log
+/backend/*.pot
+/backend/*.pyc
+/backend/__pycache__
+/backend/db.sqlite3
+/backend/media
+
+# Backup files # 
+/backend/*.bak 
+
+# If you are using PyCharm # 
+# User-specific stuff
+/backend/.idea/**/workspace.xml
+/backend/.idea/**/tasks.xml
+/backend/.idea/**/usage.statistics.xml
+/backend/.idea/**/dictionaries
+/backend/.idea/**/shelf
+
+# AWS User-specific
+/backend/.idea/**/aws.xml
+
+# Generated files
+/backend/.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+/backend/.idea/**/dataSources/
+/backend/.idea/**/dataSources.ids
+/backend/.idea/**/dataSources.local.xml
+/backend/.idea/**/sqlDataSources.xml
+/backend/.idea/**/dynamic.xml
+/backend/.idea/**/uiDesigner.xml
+/backend/.idea/**/dbnavigator.xml
+
+# Gradle
+/backend/.idea/**/gradle.xml
+/backend/.idea/**/libraries
+
+# File-based project format
+/backend/*.iws
+
+# IntelliJ
+/backend/out/
+
+# JIRA plugin
+/backend/atlassian-ide-plugin.xml
+
+# Python # 
+/backend/*.py[cod] 
+/backend/*$py.class 
+
+# Distribution / packaging 
+/backend/.Python build/ 
+/backend/develop-eggs/ 
+/backend/dist/ 
+/backend/downloads/ 
+/backend/eggs/ 
+/backend/.eggs/ 
+/backend/lib/ 
+/backend/lib64/ 
+/backend/parts/ 
+/backend/sdist/ 
+/backend/var/ 
+/backend/wheels/ 
+/backend/*.whl
+/backend/*.egg-info/ 
+/backend/.installed.cfg 
+/backend/*.egg 
+/backend/*.manifest 
+/backend/*.spec 
+
+# Installer logs 
+/backend/pip-log.txt 
+/backend/pip-delete-this-directory.txt 
+
+# Unit test / coverage reports 
+/backend/htmlcov/ 
+/backend/.tox/ 
+/backend/.coverage 
+/backend/.coverage.* 
+/backend/.cache 
+/backend/.pytest_cache/ 
+/backend/nosetests.xml 
+/backend/coverage.xml 
+/backend/*.cover 
+/backend/.hypothesis/ 
+
+
+# Sublime Text # 
+*.tmlanguage.cache 
+*.tmPreferences.cache 
+*.stTheme.cache 
+*.sublime-workspace 
+*.sublime-project 
+
+# sftp configuration file 
+sftp-config.json 
+
+# Package control specific files Package 
+Control.last-run 
+Control.ca-list 
+Control.ca-bundle 
+Control.system-ca-bundle 
+GitHub.sublime-settings 
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
