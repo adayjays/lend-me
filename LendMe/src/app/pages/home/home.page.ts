@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  userInfo: any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private backendService: BackendService) {}
 
   ngOnInit() {
+    this.backendService.getUserInfo().subscribe(userInfo => {
+      this.userInfo = userInfo;
+      // this.profilePictureUrl = userInfo.profile_picture;
+    }, error => {
+      console.error('Error retrieving user info:', error);
+    });
   }
 
   borrow() {

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Item, ItemCategory, Blog, Chat
-from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer
+from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer, CustomUserSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -9,6 +9,8 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework import generics, permissions, status
+from rest_framework.authtoken.models import Token
 
 class ItemCategoryViewSet(viewsets.ModelViewSet):
     queryset = ItemCategory.objects.all()
@@ -19,6 +21,10 @@ class BlogViewSet(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
 
 class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+    
+class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
@@ -83,6 +89,23 @@ class SignUp(APIView):
             "access": str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
     
+# class Login(APIView):
+#     def post(self, request):
+#         username = request.data.get('username')
+#         password = request.data.get('password')
+        
+#         user = authenticate(username=username, password=password)
+        
+#         if user:
+#             refresh = RefreshToken.for_user(user)
+#             return Response({
+#                 "refresh": str(refresh),
+#                 "access": str(refresh.access_token),
+#             }, status=status.HTTP_200_OK)
+#         else:
+#             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
 class Login(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -91,10 +114,20 @@ class Login(APIView):
         user = authenticate(username=username, password=password)
         
         if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
-            }, status=status.HTTP_200_OK)
+            # Create a token for the user if it does not exist, or get the existing token
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        
+class UserInfoView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)

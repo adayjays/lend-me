@@ -1,13 +1,17 @@
 from django.contrib import admin
-from .models import Item, Chat, UserProfile, Transaction, Blog, Review
+from .models import ItemCategory, Item, Chat, UserProfile, Transaction, Blog, Review, CustomUser
+
+@admin.register(ItemCategory)
+class ItemCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'owner', 'available')
+    list_display = ('name', 'description', 'owner', 'category', 'available', 'loan_fee', 'penalty')
 
 @admin.register(Chat)
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ('sender', 'receiver', 'timestamp')
+    list_display = ('sender', 'receiver', 'message', 'timestamp')
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
@@ -19,8 +23,12 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'created_at')
+    list_display = ('title', 'content', 'author', 'created_at', 'slug')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewer', 'reviewed_user', 'reviewed_item', 'rating', 'comment', 'created_at')
+
+@admin.register(CustomUser)
+class CustomeUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'bio', 'location', 'completed_transactions', 'profile_picture', 'email')

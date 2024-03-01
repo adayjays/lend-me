@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.contrib.auth.models import AbstractUser, Group, Permission
+
 
 class ItemCategory(models.Model):
     name = models.CharField(max_length=100)
@@ -60,3 +62,12 @@ class Review(models.Model):
     rating = models.IntegerField()  # Rating on a scale (e.g., 1 to 5)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class CustomUser(AbstractUser):
+    bio = models.TextField(blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    completed_transactions = models.IntegerField(default=0)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+
+    groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True)

@@ -5,9 +5,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="userInfo">
+    <p>Username: {{ userInfo.username }}</p>
+    <p>Email: {{ userInfo.email }}</p>
+    <p>Location: {{ userInfo.location }}</p>
+    <p>Completed Transactions: {{ userInfo.completed_transactions }}</p>
+    
+    <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture">
+  </div>
+  
 </ion-content>

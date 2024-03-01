@@ -11,7 +11,6 @@ export class LoginPage implements OnInit {
   username!: string;
   password!: string;
 
-  // constructor(private router: Router) { }
   constructor(private authService: AuthService, private router: Router) {}
 
 
@@ -35,11 +34,32 @@ export class LoginPage implements OnInit {
   //   }
   // }
   login() {
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/home']);
-    } else {
-      console.log('Invalid login');
-    }
+    const userData = {
+      username: this.username,
+      password: this.password
+    };
+  
+    this.authService.login(userData).subscribe(response => {
+      if (response) {
+        // save isAuthenticated to local storage
+        localStorage.setItem('isAuthenticated', 'true');
+        // Save token to local storage for future requests
+        localStorage.setItem('token', response.token);
+        // Login successful, navigate to home page
+        console.log('Login successful');
+        
+        this.router.navigate(['/home']);
+      } else {
+        // Login failed, handle invalid login
+        console.log('Invalid login');
+      }
+    }, error => {
+      // Handle error in case of HTTP request failure
+      console.error('Login error:', error);
+    });
+    
+    this.router.navigate(['/home']);
   }
+  
 
 }

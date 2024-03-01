@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,33 @@ export class BackendService {
 
   getItemById(itemId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}items/${itemId}/`);
+  }
+
+  uploadProfilePicture(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+
+    return this.http.post<any>(`${this.baseUrl}upload-profile-picture/`, formData);
+  }
+
+  getUserProfilePicture(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}user-profile-picture/${userId}/`);
+  }
+
+  getUserInfo(): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return throwError('Access token is missing');
+    }
+    
+    // Set headers with access token
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    });
+
+    // Make GET request with headers
+    return this.http.get<any>(`${this.baseUrl}user-info/`, { headers });
   }
 
 }

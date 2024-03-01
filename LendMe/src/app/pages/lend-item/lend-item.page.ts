@@ -28,6 +28,9 @@ export class LendItemPage implements OnInit {
   }
 
   saveItem() {
+    this.item.owner = 1;
+    // const categoryId = this.item.category;
+    // this.item.category = { id: categoryId};
     console.log('Saving item:', this.item);
     
     this.backendService.saveItem(this.item).subscribe(
