@@ -8,5 +8,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
+  <ion-card *ngIf="item">
+    <ion-card-header>
+      <ion-card-title>{{ item.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Description: {{ item.description }}</p>
+
+      <ng-container *ngIf="item.available; else notAvailable">
+        <p>The Item is <b>Available</b> for $ <b>{{ item.loan_fee }}</b> and a penalty of $ <b>{{ item.penalty }}</b> if late</p>
+
+        <!-- Buttons when item is available -->
+        <ion-button (click)="chatWithOwner()" expand="block">Chat with Owner</ion-button>
+        <ion-button (click)="borrowItem()" expand="block">Borrow</ion-button>
+      </ng-container>
+
+      <ng-template #notAvailable>
+        <p>The Item is <b>Not Available</b></p>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Displayed when item is not available -->
+  <div *ngIf="!item" class="not-available-message">
+    <p>The item you are looking for is not available.</p>
+  </div>
 </ion-content>

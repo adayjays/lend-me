@@ -13,10 +13,15 @@ class BlogSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'author', 'created_at', 'slug']
 
 class ItemSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)  
+
     class Meta:
         model = Item
         fields = '__all__'
 
+    def create(self, validated_data):
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:

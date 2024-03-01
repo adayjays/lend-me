@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-borrow',
@@ -11,7 +12,7 @@ export class BorrowPage implements OnInit {
   category!: string;
   items!:any;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private backend:BackendService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -22,9 +23,13 @@ export class BorrowPage implements OnInit {
     });
   }
   fetchItemsByCategory(category: string) {
-    console.log(category);
+    this.backend.getItemByCategoryId(Number(category))
+      .subscribe(items => {
+        this.items = items;
+      });
   }
   borrow(item:string){
+    console.log(item)
     
     this.router.navigate(['/borrow-item'], { queryParams: { category: item } });
   }

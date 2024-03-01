@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Displaying Items In category: {{ category }}</ion-title>
+    <ion-title>Displaying Items </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
    
   <ng-container *ngIf="items && items.length > 0; else emptyList">
     <ion-list inset lines="full">
-      <ion-item *ngFor="let item of items; let i = index" (click)="borrow(item.slug)">
+      <ion-item *ngFor="let item of items; let i = index" (click)="borrow(item.id)">
         {{ item.name }}
       </ion-item>
     </ion-list>
@@ -19,7 +19,7 @@
 
   <ng-template #emptyList>
     <div class="empty-message">
-      No items available in category: {{ category }}
+      No items available in the selected category
     </div>
   </ng-template>
 </ion-content>

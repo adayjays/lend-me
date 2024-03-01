@@ -23,17 +23,30 @@ class BlogViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):  
+        serializer.save(owner=self.request.user.id)
     
 class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class ItemByCategorySlugAPIView(generics.ListAPIView):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
         category_slug = self.kwargs['category_slug']
-        return Item.objects.filter(category__slug=category_slug)
+        return Item.objects.filter(category_slug=category_slug)
+    
+class ItemByOwnerListView(generics.ListAPIView):
+    serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return Item.objects.filter(owner=user_id)
 
 class ItemByCategoryIdAPIView(generics.ListAPIView):
     serializer_class = ItemSerializer
@@ -88,23 +101,6 @@ class SignUp(APIView):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
-    
-# class Login(APIView):
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-        
-#         user = authenticate(username=username, password=password)
-        
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             return Response({
-#                 "refresh": str(refresh),
-#                 "access": str(refresh.access_token),
-#             }, status=status.HTTP_200_OK)
-#         else:
-#             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
 
 class Login(APIView):
     def post(self, request):

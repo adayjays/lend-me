@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <ng-container *ngIf="items && items.length > 0; else emptyList">
     <ion-list inset lines="full">
-      <ion-item *ngFor="let item of items; let i = index" (click)="borrow(item.slug)">
+      <ion-item *ngFor="let item of items; let i = index" (click)="edit(item.id)">
         {{ item.name }}
       </ion-item>
     </ion-list>

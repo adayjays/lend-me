@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-lend',
@@ -10,22 +11,23 @@ export class LendPage implements OnInit {
 
   category!: string;
   items!:any;
+  userDetails: any;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private backend: BackendService, private router: Router) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.category = params['category'];
-      console.log('Category selected for borrowing: ' + this.category);
-      this.fetchItemsByCategory(this.category);
-    });
-  }
-  fetchItemsByCategory(category: string) {
-    console.log(category);
-  }
-  borrow(item:string){
     
-    this.router.navigate(['/borrow-item'], { queryParams: { category: item } });
+    this.fetchMyItems();
+    
+  }
+  fetchMyItems() {
+    this.backend.getMyItems()
+      .subscribe(items => {
+        this.items = items;
+      });
+  }
+  edit(item:string){
+    console.log(item);
   }
 
 

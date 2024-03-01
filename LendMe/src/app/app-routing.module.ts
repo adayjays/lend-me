@@ -16,59 +16,54 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  // },
   {
     path: 'borrow',
-    loadChildren: () => import('./pages/borrow/borrow.module').then( m => m.BorrowPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/borrow/borrow.module').then( m => m.BorrowPageModule)
   },
   {
     path: 'lend',
-    loadChildren: () => import('./pages/lend/lend.module').then( m => m.LendPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/lend/lend.module').then( m => m.LendPageModule)
   },
   {
     path: 'borrow-options',
-    loadChildren: () => import('./pages/borrow-options/borrow-options.module').then( m => m.BorrowOptionsPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/borrow-options/borrow-options.module').then( m => m.BorrowOptionsPageModule)
   },
   {
     path: 'borrow-item',
-    loadChildren: () => import('./pages/borrow-item/borrow-item.module').then( m => m.BorrowItemPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/borrow-item/borrow-item.module').then( m => m.BorrowItemPageModule)
   },
-  {
-    path: 'chats',
-    loadChildren: () => import('./pages/chats/chats.module').then( m => m.ChatsPageModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'chats',
+  //   loadChildren: () => import('./pages/chats/chats.module').then( m => m.ChatsPageModule)
+  // },
   {
     path: 'chat',
-    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
   },
-  {
-    path: 'notifications',
-    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'notifications',
+  //   loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+  // },
   {
     path: 'notification',
-    loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
   },
-  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'profile',
+  //   loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  // },
   {
     path: 'lend-item',
     loadChildren: () => import('./pages/lend-item/lend-item.module').then( m => m.LendItemPageModule),
+    
+  },
+  {
+    path: 'tabnav',
+    loadChildren: () => import('./tabnav/tabnav.module').then( m => m.TabnavPageModule),
     canActivate: [AuthGuard]
   }
 ];
