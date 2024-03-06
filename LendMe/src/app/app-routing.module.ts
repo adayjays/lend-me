@@ -16,10 +16,10 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
-  // {
-  //   path: 'home',
-  //   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  // },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
   {
     path: 'borrow',
     loadChildren: () => import('./pages/borrow/borrow.module').then( m => m.BorrowPageModule)
