@@ -24,9 +24,23 @@ class ItemSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class ChatSerializer(serializers.ModelSerializer):
+    # user = serializers.PrimaryKeyRelatedField(read_only=True)  
     class Meta:
         model = Chat
         fields = ['id', 'sender', 'receiver', 'message', 'timestamp']
+        
+class ReplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ['sender', 'receiver', 'message']
+
+# class ChatSerializer(serializers.ModelSerializer):
+#     sender = serializers.PrimaryKeyRelatedField(read_only=True)
+#     receiver = serializers.PrimaryKeyRelatedField(read_only=True)
+
+#     class Meta:
+#         model = Chat
+#         fields = ['id', 'sender', 'receiver', 'message', 'timestamp', 'read']
 
 class UserProductSerializer(serializers.ModelSerializer):
     category = ItemCategorySerializer()  

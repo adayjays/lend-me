@@ -1,13 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>chat</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chat</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="chat-container">
+    <div *ngFor="let message of chats.messages">
+      <div *ngIf="message.sent_by_current_user === 'sentbyme'; else blue" class="right-bubble chat-bubble">
+        {{ message.message }}
+        <br>
+        <small>{{ formatTimestamp(message.timestamp) }}</small>
+      </div>
+      <ng-template #blue>
+        <div class="left-bubble chat-bubble">
+          {{ message.message }}
+          <br>
+          <small>{{ formatTimestamp(message.timestamp) }}</small>
+        </div>
+      </ng-template>
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="Type your message..." [(ngModel)]="newMessage">
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
 </ion-content>

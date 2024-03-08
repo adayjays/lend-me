@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Item, ItemCategory, Blog, Chat
-from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer, CustomUserSerializer
+from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer, ReplySerializer, CustomUserSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
+from django.db import models
 
 class ItemCategoryViewSet(viewsets.ModelViewSet):
     queryset = ItemCategory.objects.all()
@@ -67,6 +68,128 @@ class ChatByUserAPIView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return Chat.objects.filter(sender_id=user_id) | Chat.objects.filter(receiver_id=user_id)
+
+class UserMessagesListView(generics.ListAPIView):
+    serializer_class = ChatSerializer
+
+    def get_queryset(self):
+        # Retrieve the authenticated user
+        user = self.request.user
+
+        # Retrieve messages where the user is either sender or receiver
+        queryset = Chat.objects.filter(models.Q(sender=user) | models.Q(receiver=user))
+
+        return queryset
+
+class MessagesViewList(generics.ListAPIView):
+    serializer_class = ChatSerializer
+
+    def get_queryset(self):
+        # Retrieve the authenticated user
+        user = self.request.user
+
+        # Retrieve other user id from query parameters
+        other_user_id = self.request.query_params.get('other_user_id')
+
+        if other_user_id is None:
+            # Return an empty queryset if other_user_id is not provided
+            return Chat.objects.none()
+
+        # Retrieve messages exchanged between the current user and the other user
+        queryset = Chat.objects.filter(
+            (models.Q(sender=user, receiver=other_user_id) | models.Q(sender=other_user_id, receiver=user))
+        ).order_by('timestamp')
+
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        # Determine the ID of the current user
+        current_user_id = request.user.id
+
+        # Include other user's ID and 'sent_by_current_user' information in the response
+        other_user_id = self.request.query_params.get('other_user_id')
+
+        response_data = {
+            'other_user_id': other_user_id,
+            'messages': []
+        }
+
+        messages_data = serializer.data[::-1]
+
+        for message in messages_data:
+            # Determine whether the message was sent by the current user
+            message['sent_by_current_user'] = 'sentbyme' if message['sender'] == current_user_id else 'blue'
+            response_data['messages'].append(message)
+
+        return Response(response_data)
+
+class ReplyToMessageView(generics.CreateAPIView):
+    serializer_class = ChatSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Retrieve the authenticated user
+        sender = request.user
+
+        # Retrieve the ID of the user the message is being sent to
+        receiver_id = request.data.get('otherId')
+
+        # Retrieve the message content
+        message_content = request.data.get('message')
+
+        if receiver_id is None or message_content is None:
+            return Response({"error": "otherId and message are required fields"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create the message
+        message_data = {
+            'sender': sender.id,
+            'receiver': receiver_id,
+            'message': message_content
+        }
+
+        serializer = self.get_serializer(data=message_data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class ConversationListView(generics.ListAPIView):
+    serializer_class = ChatSerializer
+
+    def get_queryset(self):
+        # Retrieve the authenticated user
+        user = self.request.user
+
+        # Retrieve distinct conversations (other users)
+        conversations = Chat.objects.filter(models.Q(sender=user) | models.Q(receiver=user)).values_list('sender', 'receiver').distinct()
+
+        # Initialize a list to store conversation data
+        conversation_data = []
+
+        # Iterate through each conversation
+        for conversation in conversations:
+            other_user_id = conversation[0] if conversation[0] != user.id else conversation[1]
+            other_user = User.objects.get(id=other_user_id)
+
+            # Retrieve the latest message in the conversation
+            latest_message = Chat.objects.filter(
+                (models.Q(sender=user, receiver=other_user) | models.Q(sender=other_user, receiver=user))
+            ).order_by('-timestamp').first()
+
+            # Add conversation data to the list
+            conversation_data.append({
+                'other_user_name': other_user.username,
+                'other_user_id': other_user.id,
+                'last_message': latest_message.message if latest_message else None
+            })
+
+        return conversation_data
+
+    def list(self, request, *args, **kwargs):
+        data = self.get_queryset()
+        return Response(data)
 
 class UserProductViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ItemSerializer

@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class BackendService {
-  
+    
   private baseUrl = 'http://127.0.0.1:8000/lendme/';
   private headers: HttpHeaders;
 
@@ -95,4 +95,29 @@ export class BackendService {
       catchError(this.handleError)
     );
   }
+  // all messages http://localhost:8000/lendme/conversations/
+  // messages between two http://localhost:8000/lendme/user-messages/?other_user_id=1 
+  
+  getMyChats(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}conversations/`, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getChat(id: any) {
+    return this.http.get<any>(`${this.baseUrl}user-messages/?other_user_id=${id}`, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  sendChatMessage(otherId: any, newMessage: any) {
+    let message = {
+      otherId:otherId,
+      message:newMessage
+    }
+    return this.http.post<any>(`${this.baseUrl}send-message/`, message, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+
 }
