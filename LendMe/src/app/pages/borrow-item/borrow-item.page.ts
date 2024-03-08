@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { BackendService } from 'src/app/services/backend.service';
 export class BorrowItemPage implements OnInit {
   item: any;
   category: any;
-  constructor(private backendservice:BackendService,private route: ActivatedRoute) { }
+  constructor(private backendservice:BackendService,private route: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -30,8 +30,9 @@ export class BorrowItemPage implements OnInit {
   borrowItem(): void{
 
   }
-  chatWithOwner(): void{
-    
+  chatWithOwner(id:any): void{
+      this.router.navigate(['/chat'], { queryParams: { id: id } });
+   
   }
 
 }

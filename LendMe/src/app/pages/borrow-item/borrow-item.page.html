@@ -20,7 +20,7 @@
         <p>The Item is <b>Available</b> for $ <b>{{ item.loan_fee }}</b> and a penalty of $ <b>{{ item.penalty }}</b> if late</p>
 
         <!-- Buttons when item is available -->
-        <ion-button (click)="chatWithOwner()" expand="block">Chat with Owner</ion-button>
+        <ion-button (click)="chatWithOwner(item.owner)" expand="block">Chat with Owner</ion-button>
         <ion-button (click)="borrowItem()" expand="block">Borrow</ion-button>
       </ng-container>
 
