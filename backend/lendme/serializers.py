@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemCategory, Blog, Chat,CustomUser
+from .models import Item, ItemCategory, Blog, Chat,UserProfile, Notification
 from django.contrib.auth.models import User
 
 class ItemCategorySerializer(serializers.ModelSerializer):
@@ -34,14 +34,6 @@ class ReplySerializer(serializers.ModelSerializer):
         model = Chat
         fields = ['sender', 'receiver', 'message']
 
-# class ChatSerializer(serializers.ModelSerializer):
-#     sender = serializers.PrimaryKeyRelatedField(read_only=True)
-#     receiver = serializers.PrimaryKeyRelatedField(read_only=True)
-
-#     class Meta:
-#         model = Chat
-#         fields = ['id', 'sender', 'receiver', 'message', 'timestamp', 'read']
-
 class UserProductSerializer(serializers.ModelSerializer):
     category = ItemCategorySerializer()  
 
@@ -54,7 +46,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email']
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'bio', 'location', 'completed_transactions']
+        model = UserProfile
+        fields = ['user', 'location', 'bio', 'completed_transactions', 'profile_picture']
+
+    def get_profile_picture_url(self, obj):
+        request = self.context.get('request')
+        if obj.profile_picture and hasattr(obj.profile_picture, 'url'):
+            return request.build_absolute_uri(obj.profile_picture.url)
+        return None
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'user', 'message', 'timestamp', 'read']

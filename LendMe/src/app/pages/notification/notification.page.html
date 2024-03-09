@@ -7,10 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">notification</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label>{{ notification.message }}</ion-label>
+    <ion-note slot="end" color="medium">{{ notification.timestamp | date: 'medium' }}</ion-note>
+  </ion-item>
 </ion-content>

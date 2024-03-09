@@ -18,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'borrow',
@@ -49,7 +50,7 @@ const routes: Routes = [
   //   loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
   // },
   {
-    path: 'notification',
+    path: 'notification/:id',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
   },
   // {

@@ -21,10 +21,15 @@ export class ChatPage implements OnInit {
     });
   }
   loadConvos(id: any) {
-    this.backend.getChat(Number(id))
-      .subscribe(chats => {
-        this.chats = chats;
+    this.backend.fetchMessagesPeriodically(id)
+      .subscribe(messages => {
+        this.chats = messages;
       });
+
+    // this.backend.getChat(Number(id))
+    //   .subscribe(chats => {
+    //     this.chats = chats;
+    //   });
   }
 
   sendMessage() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, interval, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -95,8 +95,6 @@ export class BackendService {
       catchError(this.handleError)
     );
   }
-  // all messages http://localhost:8000/lendme/conversations/
-  // messages between two http://localhost:8000/lendme/user-messages/?other_user_id=1 
   
   getMyChats(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}conversations/`, this.getRequestOptions()).pipe(
@@ -115,6 +113,25 @@ export class BackendService {
       message:newMessage
     }
     return this.http.post<any>(`${this.baseUrl}send-message/`, message, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  fetchMessagesPeriodically(otherId: number): Observable<any> {
+    // Fetch messages every 2 seconds
+    return interval(2000).pipe(
+      switchMap(() => this.getChat(otherId))
+    );
+  }
+
+  getMyNotifications(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}notifications/`, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  getNotification(id: any) {
+    return this.http.get<any>(`${this.baseUrl}notifications/${id}/`, this.getRequestOptions()).pipe(
       catchError(this.handleError)
     );
   }

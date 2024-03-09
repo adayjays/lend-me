@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Item, ItemCategory, Blog, Chat
-from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer, ReplySerializer, CustomUserSerializer
+from .models import Item, ItemCategory, Blog, Chat,Notification,UserProfile
+from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer,NotificationSerializer,UserSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
-from django.db import models
+from django.db import models,transaction
 
 class ItemCategoryViewSet(viewsets.ModelViewSet):
     queryset = ItemCategory.objects.all()
@@ -210,6 +210,11 @@ class SignUp(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         email = request.data.get('email')
+        bio = request.data.get('bio')
+        location = request.data.get('location')
+        profile_picture = request.FILES.get('profile_picture')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
         
         if not username or not password or not email:
             return Response({"error": "Please provide username, password, and email"}, status=status.HTTP_400_BAD_REQUEST)
@@ -217,13 +222,25 @@ class SignUp(APIView):
         if User.objects.filter(username=username).exists():
             return Response({"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST)
         
-        user = User.objects.create_user(username=username, password=password, email=email)
+        # Create the User instance
+        user = User.objects.create_user(username=username, password=password, email=email,first_name=first_name,last_name=last_name)
+        
+        # Create the CustomUser instance and copy over the necessary details
+        with transaction.atomic():
+            custom_user = UserProfile.objects.create(
+                user=user,
+                bio=bio,
+                location=location,
+                profile_picture=profile_picture
+            )
+
         refresh = RefreshToken.for_user(user)
         
         return Response({
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
+    
 
 class Login(APIView):
     def post(self, request):
@@ -242,11 +259,28 @@ class Login(APIView):
         
 class UserInfoView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
 
     def get(self, request, *args, **kwargs):
         user = self.get_object()
-        serializer = CustomUserSerializer(user)
+        serializer = self.serializer_class(user)
         return Response(serializer.data)
+    
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Notification.objects.filter(user=user)
+
+class NotificationDetailView(generics.RetrieveAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Notification.objects.filter(user=user)

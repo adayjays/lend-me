@@ -7,14 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div *ngIf="userInfo">
-    <p>Username: {{ userInfo.username }}</p>
-    <p>Email: {{ userInfo.email }}</p>
-    <p>Location: {{ userInfo.location }}</p>
-    <p>Completed Transactions: {{ userInfo.completed_transactions }}</p>
-    
-    <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture">
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div *ngIf="userInfo" class="user-info">
+    <div class="profile-picture">
+      <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture">
+    </div>
+    <div class="user-details">
+      <h2 class="username">{{ userInfo.username }}</h2>
+      <p class="email">
+        <ion-icon name="mail-outline"></ion-icon>
+        {{ userInfo.email }}
+      </p>
+      <p class="location">
+        <ion-icon name="location-outline"></ion-icon>
+        {{ userInfo.location }}
+      </p>
+      <p class="completed-transactions">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        Completed Transactions: {{ userInfo.completed_transactions }}
+      </p>
+    </div>
   </div>
-  
 </ion-content>

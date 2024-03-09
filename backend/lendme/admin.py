@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ItemCategory, Item, Chat, UserProfile, Transaction, Blog, Review, CustomUser
+from .models import ItemCategory, Item, Chat, UserProfile, Transaction, Blog, Review
 
 @admin.register(ItemCategory)
 class ItemCategoryAdmin(admin.ModelAdmin):
@@ -15,7 +15,7 @@ class ChatAdmin(admin.ModelAdmin):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'username', 'first_name', 'last_name', 'location', 'completed_transactions')
+    list_display = ('user', 'location', 'completed_transactions','bio','profile_picture')
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
@@ -28,7 +28,3 @@ class BlogAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewer', 'reviewed_user', 'reviewed_item', 'rating', 'comment', 'created_at')
-
-@admin.register(CustomUser)
-class CustomeUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'bio', 'location', 'completed_transactions', 'profile_picture', 'email')

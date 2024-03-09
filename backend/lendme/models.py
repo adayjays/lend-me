@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class ItemCategory(models.Model):
@@ -44,11 +43,11 @@ class Chat(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=30, unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
     location = models.CharField(max_length=255)
+    bio = models.TextField(blank=True)
     completed_transactions = models.PositiveIntegerField(default=0)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+  
 
 class Transaction(models.Model):
     borrower = models.ForeignKey(User, related_name='borrower', on_delete=models.CASCADE)
@@ -77,11 +76,14 @@ class Review(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-class CustomUser(AbstractUser):
-    bio = models.TextField(blank=True)
-    location = models.CharField(max_length=100, blank=True)
-    completed_transactions = models.IntegerField(default=0)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+class Notification(models.Model):
+    user = models.ForeignKey(User, related_name='sent_notifications', on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
 
-    groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True)
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.sender.username} to {self.receiver.username}: {self.message}"
