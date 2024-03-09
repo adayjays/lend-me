@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 class ItemCategory(models.Model):
@@ -48,14 +50,29 @@ class UserProfile(models.Model):
     completed_transactions = models.PositiveIntegerField(default=0)
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
   
+def default_end_date():
+    return timezone.now().date() + timedelta(days=7)
+
+class CustomDateField(models.DateField):
+    def to_representation(self, value):
+        return value.date()
 
 class Transaction(models.Model):
     borrower = models.ForeignKey(User, related_name='borrower', on_delete=models.CASCADE)
     lender = models.ForeignKey(User, related_name='lender', on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    status = models.CharField(max_length=50)  # e.g., "pending", "completed", "cancelled"
+    start_date = models.DateField(default=timezone.now().date())
+    end_date = CustomDateField(default=default_end_date)  # Default to 1 week from today
+    status = models.CharField(max_length=50)
+
+    def save(self, *args, **kwargs):
+        # Ensure start_date is always set to today
+        if not self.start_date:
+            self.start_date = timezone.now().date()
+        # Ensure end_date is always 1 week from today
+        if not self.end_date:
+            self.end_date = default_end_date()
+        super().save(*args, **kwargs)
 
 class Blog(models.Model):
     title = models.CharField(max_length=255)

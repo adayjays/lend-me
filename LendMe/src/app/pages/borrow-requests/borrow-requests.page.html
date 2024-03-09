@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Borrow Requests for {{name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let borrower of request_list">
+      <ion-label>{{ borrower.borrower_username }}</ion-label>
+      <!-- Accept Button -->
+      <ion-button color="success" (click)="acceptRequest(borrower.id)">
+        Accept
+      </ion-button>
+      <!-- Deny Button -->
+      <ion-button color="danger" (click)="denyRequest(borrower.id)">
+        Deny
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

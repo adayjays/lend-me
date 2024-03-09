@@ -136,5 +136,28 @@ export class BackendService {
     );
   }
   
+  borrowItem(detail:any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}borrow/`,detail, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  acceptRequest(id:any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}accept-borrow-request/${id}/`,{}, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getRequests(id: any) {
+    return this.http.get<any>(`${this.baseUrl}item-requests/?item_id=${id}`, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  denyRequest(id:any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}deny-item-request/${id}/`,{}, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
 
 }

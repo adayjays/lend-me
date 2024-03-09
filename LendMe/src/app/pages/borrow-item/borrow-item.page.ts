@@ -28,6 +28,26 @@ export class BorrowItemPage implements OnInit {
       });
   }
   borrowItem(): void{
+    const data:any = {
+      item_id:this.item.id,
+      lender_id:this.item.owner
+
+    }
+    this.backendservice.borrowItem(data)
+    .subscribe(
+      responses=>{
+        alert('The request has been received. It is pending owner\'s approval.');
+
+        // Redirect to home page
+        this.router.navigate(['/home']);
+      }, 
+      error => {
+        alert('Please Try again later');
+
+        // Redirect to home page
+        this.router.navigate(['/home']);
+      }
+    )
 
   }
   chatWithOwner(id:any): void{

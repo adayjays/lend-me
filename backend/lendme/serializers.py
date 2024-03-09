@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemCategory, Blog, Chat,UserProfile, Notification
+from .models import Item, ItemCategory, Blog, Chat,UserProfile, Notification, Transaction
 from django.contrib.auth.models import User
 
 class ItemCategorySerializer(serializers.ModelSerializer):
@@ -61,3 +61,10 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'user', 'message', 'timestamp', 'read']
+
+class TransactionSerializer(serializers.ModelSerializer):
+    borrower_username = serializers.CharField(source='borrower.username', read_only=True)
+
+    class Meta:
+        model = Transaction
+        fields = ['id', 'borrower','borrower_username', 'lender', 'item', 'start_date', 'end_date', 'status']

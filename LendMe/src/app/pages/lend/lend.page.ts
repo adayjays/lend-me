@@ -26,8 +26,9 @@ export class LendPage implements OnInit {
         this.items = items;
       });
   }
-  edit(item:string){
-    console.log(item);
+  edit(item:string,name:any){
+    
+    this.router.navigate(['/borrow-requests'], { queryParams: { id: item, name:name } });
   }
 
 

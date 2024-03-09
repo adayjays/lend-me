@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Item, ItemCategory, Blog, Chat,Notification,UserProfile
-from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer,NotificationSerializer,UserSerializer
+from .models import Item, ItemCategory, Blog, Chat,Notification,UserProfile, Transaction
+from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer,NotificationSerializer,UserSerializer,TransactionSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -284,3 +284,105 @@ class NotificationDetailView(generics.RetrieveAPIView):
     def get_queryset(self):
         user = self.request.user
         return Notification.objects.filter(user=user)
+
+
+class BorrowItemView(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = TransactionSerializer
+
+    def create(self, request, *args, **kwargs):
+        item_id = request.data.get('item_id')
+        lender_id = request.data.get('lender_id')
+
+        # Check if the item exists and is available
+        try:
+            item = Item.objects.get(pk=item_id, available=True)
+        except Item.DoesNotExist:
+            return Response({'error': 'Item not found or not available'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create a pending transaction
+        transaction = Transaction.objects.create(
+            borrower=request.user,
+            lender_id=lender_id,
+            item=item,
+            status='pending'
+        )
+
+        # Create a notification
+        notification_message = f"{request.user.username} is interested in borrowing {item.name}"
+        notification = Notification.objects.create(
+            user_id=lender_id,
+            message=notification_message
+        )
+
+        # Serialize the transaction and return the response
+        serializer = self.serializer_class(transaction)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class AcceptBorrowRequestView(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = TransactionSerializer
+    queryset = Transaction.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        
+        # Check if the current user is the owner of the item
+        if request.user != instance.item.owner:
+            return Response({'error': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Update the transaction status to 'accepted'
+        instance.status = 'accepted'
+        instance.save()
+
+        # Update the item as not available
+        instance.item.available = False
+        instance.item.save()
+
+        # Create a notification for the borrower
+        notification_message = f"Your borrow request for {instance.item.name} has been accepted"
+        notification = Notification.objects.create(
+            user_id=instance.borrower,
+            message=notification_message
+        )
+
+        serializer = self.serializer_class(instance)
+        return Response(serializer.data)
+    
+class ItemRequestsView(generics.ListAPIView):
+    serializer_class = TransactionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        item_id = self.request.query_params.get('item_id')
+        return Transaction.objects.filter(lender=self.request.user, item_id=item_id, status='pending')
+    
+class DenyItemRequestView(generics.UpdateAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        transaction_id = kwargs.get('pk')
+        try:
+            # Retrieve the transaction object
+            transaction = Transaction.objects.get(id=transaction_id)
+        except Transaction.DoesNotExist:
+            return Response({"error": "Transaction does not exist."}, status=404)
+        
+        # Ensure the transaction belongs to the authenticated user (lender)
+        if transaction.lender != request.user:
+            return Response({"error": "You are not allowed to deny this item request."}, status=403)
+        
+        # Update the status of the transaction to 'denied'
+        transaction.status = 'denied'
+        transaction.save()
+
+        # Create a notification for the borrower
+        Notification.objects.create(
+            user_id=transaction.borrower,
+            message=f"Your request for item '{transaction.item.name}' has been denied."
+        )
+
+        serializer = self.get_serializer(transaction)
+        return Response(serializer.data)

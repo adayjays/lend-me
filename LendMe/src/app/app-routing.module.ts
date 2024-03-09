@@ -66,6 +66,11 @@ const routes: Routes = [
     path: 'tabnav',
     loadChildren: () => import('./tabnav/tabnav.module').then( m => m.TabnavPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'borrow-requests',
+    loadChildren: () => import('./pages/borrow-requests/borrow-requests.module').then( m => m.BorrowRequestsPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 
