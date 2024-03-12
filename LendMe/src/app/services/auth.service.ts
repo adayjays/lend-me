@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:8000/lendme/';
+  private baseUrl = 'https://lend-me.onrender.com/lendme/';
   isAuthenticated: boolean;
 
   constructor(private http: HttpClient) {

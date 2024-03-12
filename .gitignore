@@ -13,60 +13,61 @@ $RECYCLE.BIN/
 lendMe/log.txt
 
 
-/lendMe/.sourcemaps
-/lendMe/.versions
-/lendMe/coverage
-/lendMe/.env
+lendMe/.sourcemaps
+lendMe/.versions
+lendMe/coverage
+lendMe/.env
 
 # Ionic
-/lendMe/.ionic
-/lendMe/www
-/lendMe/platforms
-/lendMe/plugins
+lendMe/.ionic
+lendMe/www
+lendMe/platforms
+lendMe/plugins
+lendMe/android/local.properties
 
 # Compiled output
-/lendMe/dist
-/lendMe/tmp
-/lendMe/out-tsc
-/lendMe/bazel-out
+lendMe/dist
+lendMe/tmp
+lendMe/out-tsc
+lendMe/bazel-out
 
 # Node
-/lendMe/node_modules
-/lendMe/npm-debug.log
-/lendMe/yarn-error.log
+lendMe/node_modules
+lendMe/npm-debug.log
+lendMe/yarn-error.log
 
 # IDEs and editors
-/lendMe/.idea/
-/lendMe/.project
-/lendMe/.classpath
-/lendMe/.c9/
-/lendMe/*.launch
-/lendMe/.settings/
-/lendMe/*.sublime-project
-/lendMe/*.sublime-workspace
+lendMe/.idea/
+lendMe/.project
+lendMe/.classpath
+lendMe/.c9/
+lendMe/*.launch
+lendMe/.settings/
+lendMe/*.sublime-project
+lendMe/*.sublime-workspace
 
 # Visual Studio Code
-/lendMe/.vscode/*
-/lendMe/!.vscode/settings.json
-/lendMe/!.vscode/tasks.json
-/lendMe/!.vscode/launch.json
-/lendMe/!.vscode/extensions.json
-/lendMe/.history/*
+lendMe/.vscode/*
+lendMe/!.vscode/settings.json
+lendMe/!.vscode/tasks.json
+lendMe/!.vscode/launch.json
+lendMe/!.vscode/extensions.json
+lendMe/.history/*
 
 
 # Miscellaneous
-/lendMe/.angular
-/lendMe/.angular/cache
-/lendMe.sass-cache/
-/lendMe/connect.lock
-/lendMe/coverage
-/lendMe/libpeerconnection.log
-/lendMetestem.log
-/lendMe/typings
+lendMe/.angular
+lendMe/.angular/cache
+lendMe.sass-cache/
+lendMe/connect.lock
+lendMe/coverage
+lendMe/libpeerconnection.log
+lendMetestem.log
+lendMe/typings
 
 # System files
-/lendMe/.DS_Store
-/lendMe/Thumbs.db
+lendMe/.DS_Store
+lendMe/Thumbs.db
 
 /backend/__pycache__/
 /backend/*/__pycache__/

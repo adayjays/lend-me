@@ -8,7 +8,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 })
 export class BackendService {
     
-  private baseUrl = 'http://127.0.0.1:8000/lendme/';
+  private baseUrl = 'https://lend-me.onrender.com/lendme/';
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
