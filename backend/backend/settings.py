@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,7 +93,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
     'default': dj_database_url.config(      
-        default='postgres://lendmeapp_user:P0DMVPI4cr155OzeheMZg3HJsocVAOQH@dpg-cno28gfjbltc73fbiqrg-a.oregon-postgres.render.com/lendmeapp',
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600
         )}
 

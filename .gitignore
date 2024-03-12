@@ -16,6 +16,7 @@ lendMe/log.txt
 /lendMe/.sourcemaps
 /lendMe/.versions
 /lendMe/coverage
+/lendMe/.env
 
 # Ionic
 /lendMe/.ionic
