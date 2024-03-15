@@ -17,6 +17,7 @@ lendMe/.sourcemaps
 lendMe/.versions
 lendMe/coverage
 lendMe/.env
+backend/.env
 
 # Ionic
 lendMe/.ionic
