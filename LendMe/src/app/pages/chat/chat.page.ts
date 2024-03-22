@@ -42,10 +42,11 @@ export class ChatPage implements OnInit {
       });
   }
 
-  formatTimestamp(timestamp: number): string {
-    const now = new Date().getTime();
-    const diff = now - timestamp;
-
+  formatTimestamp(timestamp: string): string {
+    const messageTime = new Date(timestamp).getTime();
+    const now = Date.now();
+    const diff = now - messageTime;
+  
     if (diff < 60000) {
       return 'now';
     } else if (diff < 3600000) {
@@ -57,9 +58,10 @@ export class ChatPage implements OnInit {
     } else if (diff < 172800000) {
       return 'yesterday';
     } else {
-      const date = new Date(timestamp);
+      const date = new Date(messageTime);
       return date.toLocaleDateString();
     }
   }
+  
 
 }
