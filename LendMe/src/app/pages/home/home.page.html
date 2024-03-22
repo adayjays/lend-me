@@ -1,18 +1,56 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content [fullscreen]="true">
   <div class="full centered">
 
-  <p>Welcome, <b>{{ userInfo.username }}</b></p>
+    <p>Welcome, <b>{{ userInfo.username }}</b></p>
   </div>
-  <ion-img src="https://profileme.app/wp-content/uploads/2021/01/cropped-ProfileMe-06.jpg"></ion-img>
 
   <div class="full centered">
     <ion-button expand="half" (click)="borrow()">Borrow</ion-button>
     <ion-button expand="half" (click)="lend()">Lend</ion-button>
   </div>
+  <br>
+  <br>
+
+  <div class="search-container full centered">
+    <input class="search-input" type="text" [(ngModel)]="searchQuery" placeholder="Search...">
+    <button class="search-button" (click)="searchItems()">Search</button>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="searchResults.length > 0" class="search-results full centered">
+    <h2>Search Results:</h2>
+    <ul>
+      <ion-item *ngFor="let result of searchResults" class="search-result-item" (click)="borrowItems(result.id)">
+        {{ result.name }} - {{ result.description }}
+      </ion-item>
+    </ul>
+  </div>
+
+
+
+  <div class="full centered">
+    <ng-container *ngIf="latestItems && latestItems.length > 0; else emptyList">
+      <ion-list inset lines="full">
+        <h2>Latest Items</h2>
+        <ion-item *ngFor="let item of latestItems; let i = index" (click)="borrowItems(item.id)">
+          {{ item.name }}
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+
+    <ng-container *ngIf="recommendedItems.length > 0">
+      <h2>Recommended Items:</h2>
+      <ion-list inset lines="full">
+        <ion-item *ngFor="let item of recommendedItems">
+          {{ item.name }} - {{ item.description }}
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    
+
+  </div>
+
 </ion-content>

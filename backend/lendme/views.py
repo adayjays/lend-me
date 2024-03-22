@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from django.db import models,transaction
+from rest_framework.pagination import PageNumberPagination
 
 class ItemCategoryViewSet(viewsets.ModelViewSet):
     queryset = ItemCategory.objects.all()
@@ -26,8 +27,34 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return Item.objects.filter(available=True).order_by('-id')[:5]
+
     def perform_create(self, serializer):  
         serializer.save(owner=self.request.user.id)
+
+class ItemSearchPagination(PageNumberPagination):
+    page_size = 5  # Adjust the page size as per your requirement
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+class ItemSearchView(APIView):
+    pagination_class = ItemSearchPagination
+
+    def get(self, request, format=None):
+        query = request.query_params.get('query', None)
+        if query:
+            items = Item.objects.filter(
+                name__icontains=query,
+                available=True
+            )
+            # Paginate the queryset
+            paginator = self.pagination_class()
+            result_page = paginator.paginate_queryset(items, request)
+            serializer = ItemSerializer(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            return Response({'message': 'Please provide a search query'}, status=400)
     
 class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()

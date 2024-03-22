@@ -8,7 +8,9 @@ import { catchError, switchMap } from 'rxjs/operators';
 })
 export class BackendService {
     
-  private baseUrl = 'https://lend-me.onrender.com/lendme/';
+  private baseUrl = 'http://127.0.0.1:8000/lendme/';
+  // private baseUrl = 'https://lend-me.onrender.com/lendme/';
+  // http://127.0.0.1:8000
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -156,6 +158,29 @@ export class BackendService {
   
   denyRequest(id:any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}deny-item-request/${id}/`,{}, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  searchItems(query: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}items-search/?query=${query}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getLatest(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}items/`, this.getRequestOptions()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  loadNextPage(nextPageUrl: string): Observable<any> {
+    return this.http.get<any>(nextPageUrl).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getRecommendedItems(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}recommended-items/`).pipe(
       catchError(this.handleError)
     );
   }

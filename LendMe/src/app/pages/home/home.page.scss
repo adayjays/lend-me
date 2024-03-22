@@ -33,3 +33,49 @@ ion-content {
   ion-button:hover {
     background-color: #0056b3;
   }
+/* search.component.css */
+
+/* Style for the container div */
+.search-container {
+  margin-bottom: 20px;
+}
+
+/* Style for the input field */
+.search-input {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the search button */
+.search-button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style for the error message */
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
+/* Style for the list of search results */
+.search-results {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style for each search result item */
+.search-result-item {
+  margin-bottom: 10px;
+}
+
+/* Style for the 'No results found' message */
+.no-results-message {
+  color: #888;
+}
