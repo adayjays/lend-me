@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginPage implements OnInit {
   username!: string;
   password!: string;
+  errorMessage: string = ''; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,16 +24,7 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-  // login() {
-  //   // Replace the hardcoded values with your authentication logic
-  //   if (this.username === 'user' && this.password === 'password') {
-  //     // Navigate to the home page on successful login
-  //     this.router.navigate(['/home']);
-  //   } else {
-  //     // Handle invalid login
-  //     console.log('Invalid login');
-  //   }
-  // }
+ 
   login() {
     const userData = {
       username: this.username,
@@ -51,11 +43,13 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/home']);
       } else {
         // Login failed, handle invalid login
+        this.errorMessage = 'Invalid email or password'; // Set error message
         console.log('Invalid login');
       }
     }, error => {
       // Handle error in case of HTTP request failure
       console.error('Login error:', error);
+      this.errorMessage = 'An error occurred. Please try again later.'; // Set error message
     });
     
     this.router.navigate(['/home']);

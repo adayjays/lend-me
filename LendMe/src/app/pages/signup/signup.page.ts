@@ -13,15 +13,16 @@ export class SignupPage implements OnInit {
   last_name: string = '';
   email: string = '';
   password: string = '';
-  bio: string = ''; // New fields for additional user details
+  bio: string = '';
   location: string = '';
-  profilePicture?: File|null = null; // For profile picture upload
+  profilePicture?: File | null = null;
+  errorMessage: string = ''; // Property to store error message
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
-  onFileSelected(event:any) {
+  onFileSelected(event: any) {
     console.log("selected");
     this.profilePicture = event.target.files[0];
     console.log(this.profilePicture);
@@ -38,16 +39,22 @@ export class SignupPage implements OnInit {
       first_name: this.first_name,
       last_name: this.last_name
     };
-    
+
     this.authService.signup(userData).subscribe(response => {
-      if (response) {
+      console.log('Signup response:', response);
+      // console.log(response.refresh)
+      if (response.refresh) {
         console.log('Signup successful');
         this.router.navigate(['/login']);
       } else {
         console.log('Signup failed');
+        // Display server-side error message
+        this.errorMessage = response.message;
       }
     }, error => {
       console.error('Signup error:', error);
+      // Handle other errors (e.g., network issues)
+      this.errorMessage = 'An error occurred. Please try again later.';
     });
   }
 }

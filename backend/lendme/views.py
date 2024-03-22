@@ -98,7 +98,7 @@ class MessagesViewList(generics.ListAPIView):
         # Retrieve messages exchanged between the current user and the other user
         queryset = Chat.objects.filter(
             (models.Q(sender=user, receiver=other_user_id) | models.Q(sender=other_user_id, receiver=user))
-        ).order_by('timestamp')
+        ).order_by('-id')
 
         return queryset
 

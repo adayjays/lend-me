@@ -24,3 +24,48 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  
+  .error-message strong {
+    font-weight: bold;
+  }
+  
+  .error-message.d-block {
+    display: block;
+  }
+  
+  .error-message.d-none {
+    display: none;
+  }
+  
+  .success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 0.75rem 1.25rem;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  
+  .success-message strong {
+    font-weight: bold;
+  }
+  
+  .success-message.d-block {
+    display: block;
+  }
+  
+  .success-message.d-none {
+    display: none;
+  }
+  

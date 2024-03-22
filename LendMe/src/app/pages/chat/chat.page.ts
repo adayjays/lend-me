@@ -18,18 +18,17 @@ export class ChatPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.otherId = params['id'];
       this.loadConvos(this.otherId);
+      
     });
   }
   loadConvos(id: any) {
     this.backend.fetchMessagesPeriodically(id)
       .subscribe(messages => {
         this.chats = messages;
+        console.log(this.chats);
+
       });
 
-    // this.backend.getChat(Number(id))
-    //   .subscribe(chats => {
-    //     this.chats = chats;
-    //   });
   }
 
   sendMessage() {
