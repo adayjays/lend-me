@@ -10,7 +10,9 @@
 <ion-content [fullscreen]="true">
   <div class="chat-list">
     <div class="chat-item" *ngFor="let chat of chats" (click)="messages(chat.other_user_id)">
-      <div class="avatar"></div>
+      <div class="avatar">
+        <img src="https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png" alt="" srcset="">
+      </div>
       <div class="details">
         <div class="username">{{ chat.other_user_name }}</div>
         <div class="latest-message">{{ chat.last_message }}</div>

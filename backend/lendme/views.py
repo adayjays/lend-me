@@ -201,28 +201,38 @@ class ConversationListView(generics.ListAPIView):
         # Retrieve the authenticated user
         user = self.request.user
 
-        # Retrieve distinct conversations (other users)
-        conversations = Chat.objects.filter(models.Q(sender=user) | models.Q(receiver=user)).values_list('sender', 'receiver').distinct()
+        # Initialize a set to store unique combinations of sender and receiver
+        unique_conversations = set()
 
         # Initialize a list to store conversation data
         conversation_data = []
 
+        # Retrieve all conversations involving the user
+        conversations = Chat.objects.filter(
+            models.Q(sender=user) | models.Q(receiver=user)
+        ).order_by('-timestamp')
+
         # Iterate through each conversation
         for conversation in conversations:
-            other_user_id = conversation[0] if conversation[0] != user.id else conversation[1]
-            other_user = User.objects.get(id=other_user_id)
+            # Construct the combination of sender and receiver
+            sender_id = conversation.sender.id
+            receiver_id = conversation.receiver.id
+            combination = tuple(sorted((sender_id, receiver_id)))
 
-            # Retrieve the latest message in the conversation
-            latest_message = Chat.objects.filter(
-                (models.Q(sender=user, receiver=other_user) | models.Q(sender=other_user, receiver=user))
-            ).order_by('-timestamp').first()
+            # Check if the combination is already in the set
+            if combination not in unique_conversations:
+                unique_conversations.add(combination)
 
-            # Add conversation data to the list
-            conversation_data.append({
-                'other_user_name': other_user.username,
-                'other_user_id': other_user.id,
-                'last_message': latest_message.message if latest_message else None
-            })
+                # Determine the other user
+                other_user_id = sender_id if sender_id != user.id else receiver_id
+                other_user = User.objects.get(id=other_user_id)
+
+                # Add conversation data to the list
+                conversation_data.append({
+                    'other_user_name': other_user.username,
+                    'other_user_id': other_user.id,
+                    'last_message': conversation.message
+                })
 
         return conversation_data
 
