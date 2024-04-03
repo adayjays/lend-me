@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ItemCategory, Item, Chat, UserProfile, Transaction, Blog, Review
+from .models import ItemCategory, Item, Chat, UserProfile, Transaction, Blog, Review, UserItemInteraction
 
 @admin.register(ItemCategory)
 class ItemCategoryAdmin(admin.ModelAdmin):
@@ -28,3 +28,8 @@ class BlogAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewer', 'reviewed_user', 'reviewed_item', 'rating', 'comment', 'created_at')
+
+@admin.register(UserItemInteraction)
+class UserItemInteractionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'item', 'timestamp')
+    list_filter = ('user', 'timestamp')

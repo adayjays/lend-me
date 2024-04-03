@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
-from .views import ItemCategoryViewSet, BlogViewSet, ItemViewSet, BorrowItemView, AcceptBorrowRequestView,DenyItemRequestView, ItemByCategorySlugAPIView, ItemByCategoryIdAPIView, ItemByIdAPIView, ChatViewSet, UserProductViewSet, ChatByUserAPIView
+from .views import ItemCategoryViewSet, BlogViewSet, RecommendedItemsAPIView, ItemViewSet, BorrowItemView, AcceptBorrowRequestView,DenyItemRequestView, ItemByCategorySlugAPIView, ItemByCategoryIdAPIView, ItemByIdAPIView, ChatViewSet, UserProductViewSet, ChatByUserAPIView
 from .views import SignUp, Login, UserInfoView, ItemByOwnerListView,ItemSearchView,MessagesViewList, ItemRequestsView, ConversationListView,ReplyToMessageView,NotificationListView,NotificationDetailView
 
 router = DefaultRouter()
@@ -13,6 +13,7 @@ router.register(r'user-products', UserProductViewSet, basename='user-product')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('recommended-items/', RecommendedItemsAPIView.as_view(), name='recommended-items'),
     path('items-search/', ItemSearchView.as_view(), name='item-search'),
     path('deny-item-request/<int:pk>/', DenyItemRequestView.as_view(), name='deny_item_request'),
     path('accept-borrow-request/<int:pk>/', AcceptBorrowRequestView.as_view(), name='accept_borrow_request'),

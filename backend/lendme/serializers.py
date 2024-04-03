@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from .recommendation_service import get_recommendations_for_user
 from .models import Item, ItemCategory, Blog, Chat,UserProfile, Notification, Transaction
 from django.contrib.auth.models import User
 
@@ -68,3 +70,11 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['id', 'borrower','borrower_username', 'lender', 'item', 'start_date', 'end_date', 'status']
+
+
+class RecommendationSerializer(serializers.ModelSerializer):
+    recommendations = serializers.SerializerMethodField()
+
+    def get_recommendations(self, obj):
+        user = self.context['request'].user
+        return get_recommendations_for_user(user)

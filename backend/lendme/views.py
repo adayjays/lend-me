@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from .models import Item, ItemCategory, Blog, Chat,Notification,UserProfile, Transaction
+from .models import Item, ItemCategory, Blog, Chat,Notification, UserItemInteraction,UserProfile, Transaction
 from .serializers import ItemSerializer, ItemCategorySerializer, BlogSerializer, ChatSerializer,NotificationSerializer,UserSerializer,TransactionSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -13,6 +14,8 @@ from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from django.db import models,transaction
 from rest_framework.pagination import PageNumberPagination
+
+from .recommendation_service import get_recommendations_for_user
 
 class ItemCategoryViewSet(viewsets.ModelViewSet):
     queryset = ItemCategory.objects.all()
@@ -87,6 +90,17 @@ class ItemByIdAPIView(generics.RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     lookup_field = 'id'
+
+    def get_object(self):
+        # Get the item object
+        item = get_object_or_404(self.queryset, id=self.kwargs.get('id'))
+        
+        # Log user interaction
+        if self.request.user.is_authenticated:
+            # Assuming you have a UserItemInteraction model
+            UserItemInteraction.objects.create(user=self.request.user, item=item)
+
+        return item
 
 class ChatByUserAPIView(generics.ListAPIView):
     serializer_class = ChatSerializer
@@ -413,3 +427,11 @@ class DenyItemRequestView(generics.UpdateAPIView):
 
         serializer = self.get_serializer(transaction)
         return Response(serializer.data)
+    
+class RecommendedItemsAPIView(generics.ListAPIView):
+    serializer_class = ItemSerializer
+    
+    def get_queryset(self):
+        # Retrieve recommendations for the current user
+        recommendations = get_recommendations_for_user(self.request.user)
+        return recommendations
