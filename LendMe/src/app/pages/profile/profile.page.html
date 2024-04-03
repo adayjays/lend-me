@@ -3,15 +3,23 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>profile</ion-title>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div *ngIf="userInfo" class="user-info">
     <div class="profile-picture">
-      <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture">
+      <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" />
+      <img *ngIf="!profilePictureUrl" src="https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png" alt="Default Avatar" />
     </div>
+
     <div class="user-details">
       <h2 class="username">{{ userInfo.username }}</h2>
       <p class="email">
@@ -28,4 +36,6 @@
       </p>
     </div>
   </div>
+
+  <ion-button color="danger" (click)="confirmDeleteAccount()">Delete Account</ion-button>
 </ion-content>

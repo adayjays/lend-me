@@ -20,37 +20,46 @@
 
   <div *ngIf="searchResults.length > 0" class="search-results full centered">
     <h2>Search Results:</h2>
-    <ul>
-      <ion-item *ngFor="let result of searchResults" class="search-result-item" (click)="borrowItems(result.id)">
-        {{ result.name }} - {{ result.description }}
-      </ion-item>
-    </ul>
+    <div class="card-container">
+      <ion-card *ngFor="let result of searchResults" class="search-result-card" (click)="borrowItems(result.id)" [style.background-color]="getRandomColor()">
+        <ion-card-header>
+          <b>{{ result.name }}</b>
+        </ion-card-header>
+        <ion-card-content>
+          {{ result.description }}
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-
-
-
+  
   <div class="full centered">
     <ng-container *ngIf="latestItems && latestItems.length > 0; else emptyList">
-      <ion-list inset lines="full">
-        <h2>Latest Items</h2>
-        <ion-item *ngFor="let item of latestItems; let i = index" (click)="borrowItems(item.id)">
-          {{ item.name }}
-        </ion-item>
-      </ion-list>
+      <h2>Latest Items</h2>
+      <div class="card-container">
+        <ion-card *ngFor="let item of latestItems; let i = index" (click)="borrowItems(item.id)" [style.background-color]="getRandomColor()">
+          <ion-card-header>
+            <b>{{ item.name }}</b>
+          </ion-card-header>
+          <ion-card-content>
+            {{ item.description }}
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ng-container>
-
-
+  
     <ng-container *ngIf="recommendedItems.length > 0">
       <h2>Recommended Items:</h2>
-      <ion-list inset lines="full">
-        <ion-item *ngFor="let item of recommendedItems" (click)="borrowItems(item.id)">
-          {{ item.name }} - {{ item.description }}
-        </ion-item>
-      </ion-list>
+      <div class="card-container">
+        <ion-card *ngFor="let item of recommendedItems" (click)="borrowItems(item.id)" [style.background-color]="getRandomColor()">
+          <ion-card-header>
+            <b>{{ item.name }}</b>
+          </ion-card-header>
+          <ion-card-content>
+            {{ item.description }}
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ng-container>
-
-    
-
   </div>
-
+  
 </ion-content>
