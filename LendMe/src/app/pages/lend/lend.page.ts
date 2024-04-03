@@ -30,6 +30,10 @@ export class LendPage implements OnInit {
     
     this.router.navigate(['/borrow-requests'], { queryParams: { id: item, name:name } });
   }
+  getTheRequests(item:string,name:any){
+    
+    this.router.navigate(['/borrow-requests'], { queryParams: { id: item, name:name } });
+  }
 
 
 }

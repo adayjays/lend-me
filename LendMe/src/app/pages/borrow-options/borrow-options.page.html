@@ -9,12 +9,22 @@
 
 <ion-content [fullscreen]="true">
 
+  
   <ng-container *ngIf="itemCategories && itemCategories.length > 0; else emptyList">
-    <ion-list inset lines="full">
-      <ion-item *ngFor="let category of itemCategories; let i = index" (click)="borrow(category.id)">
-        {{ category.name }}
-      </ion-item>
-    </ion-list>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let category of itemCategories; let i = index" >
+        <ion-card color="medium" class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>{{ category.name }}</ion-card-title>
+          </ion-card-header>
+          
+          <ion-button fill="solid" expand="full"  (click)="borrow(category.id)">Borrow Now</ion-button>
+        </ion-card>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
   </ng-container>
 
   <ng-template #emptyList>

@@ -5,15 +5,15 @@
   </div>
 
   <div class="full centered">
-    <ion-button expand="half" (click)="borrow()">Borrow</ion-button>
-    <ion-button expand="half" (click)="lend()">Lend</ion-button>
+    <ion-button expand="half" fill="clear" (click)="borrow()">Borrow</ion-button>
+    <ion-button expand="half" fill="clear" (click)="lend()">Lend</ion-button>
   </div>
   <br>
   <br>
 
   <div class="search-container full centered">
     <input class="search-input" type="text" [(ngModel)]="searchQuery" placeholder="Search...">
-    <button class="search-button" (click)="searchItems()">Search</button>
+    <button class="search-button" fill="clear" (click)="searchItems()">Search</button>
   </div>
 
   <div *ngIf="error" class="error-message">{{ error }}</div>
@@ -21,12 +21,19 @@
   <div *ngIf="searchResults.length > 0" class="search-results full centered">
     <h2>Search Results:</h2>
     <div class="card-container">
-      <ion-card *ngFor="let result of searchResults" class="search-result-card" (click)="borrowItems(result.id)" [style.background-color]="getRandomColor()">
-        <ion-card-header>
-          <b>{{ result.name }}</b>
+      <ion-card *ngFor="let result of searchResults" class="search-result-card" color="tertiary">
+        <ion-card-header>          
+          <ion-card-title>{{ result.name }}</ion-card-title>
+          <ion-card-subtitle>{{ result.category_name }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          {{ result.description }}
+          <div class="card-content">
+            <p>{{ result.description }}</p>
+            <p>Available: {{ result.available ? 'Yes' : 'No' }}</p>
+            <p>Loan Fee: ${{ result.loan_fee }}</p>
+            <p>Penalty: ${{ result.penalty }}</p>
+          </div>
+          <ion-button (click)="borrowItems(result.id)" fill="outline">Borrow Now</ion-button>
         </ion-card-content>
       </ion-card>
     </div>
@@ -36,12 +43,20 @@
     <ng-container *ngIf="latestItems && latestItems.length > 0; else emptyList">
       <h2>Latest Items</h2>
       <div class="card-container">
-        <ion-card *ngFor="let item of latestItems; let i = index" (click)="borrowItems(item.id)" [style.background-color]="getRandomColor()">
+        <ion-card *ngFor="let item of latestItems; let i = index" color="success">
           <ion-card-header>
-            <b>{{ item.name }}</b>
+            <ion-card-title>{{ item.name }}</ion-card-title>
+            <ion-card-subtitle>{{ item.category_name }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            {{ item.description }}
+            <div class="card-content">
+              <p>{{ item.description }}</p>
+            <hr>
+              <p>Available: {{ item.available ? 'Yes' : 'No' }}</p>
+              <p>Loan Fee: ${{ item.loan_fee }}</p>
+              <p>Penalty: ${{ item.penalty }}</p>
+            </div>
+            <ion-button fill="clear" (click)="borrowItems(item.id)">Borrow Now</ion-button>
           </ion-card-content>
         </ion-card>
       </div>
@@ -50,16 +65,24 @@
     <ng-container *ngIf="recommendedItems.length > 0">
       <h2>Recommended Items:</h2>
       <div class="card-container">
-        <ion-card *ngFor="let item of recommendedItems" (click)="borrowItems(item.id)" [style.background-color]="getRandomColor()">
+        <ion-card *ngFor="let item of recommendedItems" color="secondary">
           <ion-card-header>
-            <b>{{ item.name }}</b>
+            <ion-card-title>{{ item.name }}</ion-card-title>
+            <ion-card-subtitle>{{ item.category_name }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            {{ item.description }}
+            <div class="card-content">
+              <p>{{ item.description }}</p>
+              <p>Available: {{ item.available ? 'Yes' : 'No' }}</p>
+              <p>Loan Fee: ${{ item.loan_fee }}</p>
+              <p>Penalty: ${{ item.penalty }}</p>
+            </div>
+            <ion-button (click)="borrowItems(item.id)" fill="outline">Borrow Now</ion-button>
           </ion-card-content>
         </ion-card>
       </div>
     </ng-container>
   </div>
+  
   
 </ion-content>

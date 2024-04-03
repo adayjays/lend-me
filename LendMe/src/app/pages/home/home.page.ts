@@ -108,30 +108,5 @@ export class HomePage implements OnInit {
         // this.error = 'Error fetching recommended items. Please try again.';
       }
     );
-  }
-  getRandomColor(): string {
-    const min = 40; // Minimum lightness value
-    const max = 60; // Maximum lightness value
-    const saturation = 70; // Saturation value
-    const hue = 180; // Hue value for teal
-  
-    // Generate a random lightness value between min and max
-    const lightness = Math.floor(Math.random() * (max - min + 1)) + min;
-  
-    // Convert HSL to RGB
-    const h = hue / 360;
-    const s = saturation / 100;
-    const l = lightness / 100;
-    const a = s * Math.min(l, 1 - l);
-    const f = (n: number) => {
-      const k = (n + h * 6) % 6;
-      return l - a * Math.max(Math.min(k, 4 - k, 1), 0);
-    };
-    const rgb = [f(5), f(3), f(1)].map(v => Math.round(v * 255));
-  
-    // Return the RGB value as a CSS color string
-    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-  }
-  
-  
+  }  
 }

@@ -15,11 +15,13 @@ class BlogSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'author', 'created_at', 'slug']
 
 class ItemSerializer(serializers.ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(read_only=True)  
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    category_name = serializers.CharField(source='category.name', read_only=True) 
 
     class Meta:
         model = Item
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'owner', 'category', 'category_name', 'available', 'loan_fee', 'penalty']
+
 
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
