@@ -11,6 +11,7 @@ import { BackendService } from 'src/app/services/backend.service';
 export class BorrowPage implements OnInit {
   category!: string;
   items!:any;
+  filteredItems: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private backend:BackendService) { }
 
@@ -28,6 +29,14 @@ export class BorrowPage implements OnInit {
         this.items = items;
       });
   }
+
+  filterItems(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    this.filteredItems = this.items.filter((item: { name: string; }) =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+  }
+  
   borrow(item:string){
     console.log(item)
     

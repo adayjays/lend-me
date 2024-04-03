@@ -43,7 +43,7 @@
     <ng-container *ngIf="recommendedItems.length > 0">
       <h2>Recommended Items:</h2>
       <ion-list inset lines="full">
-        <ion-item *ngFor="let item of recommendedItems">
+        <ion-item *ngFor="let item of recommendedItems" (click)="borrowItems(item.id)">
           {{ item.name }} - {{ item.description }}
         </ion-item>
       </ion-list>

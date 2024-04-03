@@ -39,7 +39,9 @@ export class HomePage implements OnInit {
         this.error = error;
 
       }
-     })
+     });
+
+     this.getRecommendedItems();
   }
   searchItems() {
     if (this.searchQuery.trim() === '') {
@@ -53,7 +55,7 @@ export class HomePage implements OnInit {
       },
       (error) => {
         console.error('Error fetching search results:', error);
-        this.error = 'Error fetching search results. Please try again.';
+        this.error = 'Error fetching search results. Please try again later.';
       }
     );
   }
@@ -103,7 +105,7 @@ export class HomePage implements OnInit {
       },
       (error) => {
         console.error('Error fetching recommended items:', error);
-        this.error = 'Error fetching recommended items. Please try again.';
+        // this.error = 'Error fetching recommended items. Please try again.';
       }
     );
   }

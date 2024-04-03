@@ -91,16 +91,14 @@ class ItemByIdAPIView(generics.RetrieveAPIView):
     serializer_class = ItemSerializer
     lookup_field = 'id'
 
-    def get_object(self):
-        # Get the item object
-        item = get_object_or_404(self.queryset, id=self.kwargs.get('id'))
-        
-        # Log user interaction
-        if self.request.user.is_authenticated:
-            # Assuming you have a UserItemInteraction model
-            UserItemInteraction.objects.create(user=self.request.user, item=item)
+    def retrieve(self, request, *args, **kwargs):
+        response = super().retrieve(request, *args, **kwargs)
 
-        return item
+        if request.user.is_authenticated:
+            item = self.get_object()
+            UserItemInteraction.objects.create(user=request.user, item=item)
+
+        return response
 
 class ChatByUserAPIView(generics.ListAPIView):
     serializer_class = ChatSerializer
@@ -429,9 +427,13 @@ class DenyItemRequestView(generics.UpdateAPIView):
         return Response(serializer.data)
     
 class RecommendedItemsAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ItemSerializer
-    
+
     def get_queryset(self):
-        # Retrieve recommendations for the current user
-        recommendations = get_recommendations_for_user(self.request.user)
-        return recommendations
+        user = self.request.user
+        if user.is_authenticated:
+            recommendations = get_recommendations_for_user(user)
+            return recommendations
+        else:
+            return Item.objects.none()

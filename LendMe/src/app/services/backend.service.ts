@@ -55,19 +55,19 @@ export class BackendService {
   }
 
   getItemByCategorySlug(categorySlug: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}items/?category_slug=${categorySlug}`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}item/by-category-slug?category_slug=${categorySlug}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getItemByCategoryId(categoryId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}items/by-category-id/${categoryId}/`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}item/by-category-id/${categoryId}/`).pipe(
       catchError(this.handleError)
     );
   }
 
   getItemById(itemId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}items/${itemId}/`, this.getRequestOptions()).pipe(
+    return this.http.get<any>(`${this.baseUrl}item/${itemId}/`, this.getRequestOptions()).pipe(
       catchError(this.handleError)
     );
   }
